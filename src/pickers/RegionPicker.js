@@ -55,6 +55,7 @@ class RegionPicker extends Component {
       readOnly = false,
       required = false,
       allRegions,
+      title,
     } = this.props;
 
     allRegionsFlag = allRegions;
@@ -86,6 +87,7 @@ class RegionPicker extends Component {
             ? formatMessage(intl, "location", "location.RegionPicker.null")
             : formatMessage(intl, "location", "location.RegionPicker.none")
         }
+        title={title}
       />
     );
   }
