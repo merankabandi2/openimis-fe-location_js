@@ -33,6 +33,7 @@ const LocationPicker = (props) => {
     filterSelectedOptions = true,
     withPlaceholder,
     restrictedOptions,
+    title = '',
   } = props;
   const [open, setOpen] = useState(false);
   const [resetKey, setResetKey] = useState();
@@ -132,6 +133,7 @@ const LocationPicker = (props) => {
           placeholder={
             withPlaceholder ? placeholder || formatMessage(`Location${locationLevel}Picker.placehoder`) : null
           }
+          title={title}
         />
       )}
     />

@@ -44,6 +44,7 @@ class DistrictPicker extends Component {
       districts,
       readOnly = false,
       required = false,
+      title,
     } = this.props;
 
     let items = userHealthFacilityFullPath && [userHealthFacilityFullPath.location] || districts || [];
@@ -75,6 +76,7 @@ class DistrictPicker extends Component {
             ? formatMessage(intl, "location", "location.DistrictPicker.null")
             : formatMessage(intl, "location", "location.DistrictPicker.none")
         }
+        title={title}
       />
     );
   }
