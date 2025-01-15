@@ -13,6 +13,7 @@ import HealthFacilityLegalFormPicker from "./pickers/HealthFacilityLegalFormPick
 import HealthFacilityPriceListsPanel from "./components/HealthFacilityPriceListsPanel";
 import CoarseLocationFilter from "./filters/CoarseLocationFilter";
 import DetailedLocationFilter from "./filters/DetailedLocationFilter";
+import LocationFilter from "./filters/LocationFilter";
 import CoarseLocation from "./components/CoarseLocation";
 import FSPCoarseLocation from "./components/FSPCoarseLocation";
 import DetailedLocation from "./components/DetailedLocation";
@@ -64,6 +65,7 @@ const DEFAULT_CONFIG = {
     { key: "location.HealthFacilitiesPage", ref: HealthFacilitiesPage },
     { key: "location.CoarseLocationFilter", ref: CoarseLocationFilter },
     { key: "location.DetailedLocationFilter", ref: DetailedLocationFilter },
+    { key: "location.LocationFilter", ref: LocationFilter },
     { key: "location.CoarseLocation", ref: CoarseLocation },
     { key: "location.FSPCoarseLocation", ref: FSPCoarseLocation },
     { key: "location.DetailedLocation", ref: DetailedLocation },
