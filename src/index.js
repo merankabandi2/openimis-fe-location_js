@@ -17,6 +17,7 @@ import LocationFilter from "./filters/LocationFilter";
 import CoarseLocation from "./components/CoarseLocation";
 import FSPCoarseLocation from "./components/FSPCoarseLocation";
 import DetailedLocation from "./components/DetailedLocation";
+import CommuneLocation from "./components/CommuneLocation";
 import DetailedHealthFacility from "./components/DetailedHealthFacility";
 import RegionPicker from "./pickers/RegionPicker";
 import DistrictPicker from "./pickers/DistrictPicker";
@@ -69,6 +70,7 @@ const DEFAULT_CONFIG = {
     { key: "location.CoarseLocation", ref: CoarseLocation },
     { key: "location.FSPCoarseLocation", ref: FSPCoarseLocation },
     { key: "location.DetailedLocation", ref: DetailedLocation },
+    { key: "location.CommuneLocation", ref: CommuneLocation },
     { key: "location.DetailedHealthFacility", ref: DetailedHealthFacility },
     
     { key: "location.route.healthFacility", ref: ROUTE_HEALTH_FACILITY_EDIT },

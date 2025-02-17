@@ -86,24 +86,21 @@ class DetailedLocationFilter extends Component {
     let grid = split ? 12 : 6;
     return (
       <Grid container className={classes.form}>
-        <Grid item xs={grid}>
-          <CoarseLocationFilter reset={this.state.reset} {...this.props} onChange={this.onChange} />
-        </Grid>
-        {_.times(this.locationTypes.length - 2, (i) => (
+        {_.times(this.locationTypes.length - 1, (i) => (
           <ControlledField
             module="location"
-            id={`DetailedLocationFilter.location_${this.locationTypes.length - 2 + i}`}
-            key={`location_${this.locationTypes.length - 2 + i}`}
+            id={`DetailedLocationFilter.location_${this.locationTypes.length - 3 + i}`}
+            key={`location_${this.locationTypes.length - 3 + i}`}
             field={
               <Grid item xs={Math.floor(grid / (this.locationTypes.length - 2))} className={classes.item}>
                 <PublishedComponent
                   pubRef="location.LocationPicker"
-                  value={this._filterValue(`${this.props.anchor}_${this.locationTypes.length - 2 + i}`)}
+                  value={this._filterValue(`${this.props.anchor}_${this.locationTypes.length - 3 + i}`)}
                   withNull={true}
                   reset={this.state.reset}
-                  onChange={(v, s) => this.onChange(this.locationTypes.length - 2 + i, v, s)}
-                  parentLocation={this._filterValue(`${this.props.anchor}_${this.locationTypes.length - 3 + i}`)}
-                  locationLevel={this.locationTypes.length - 2 + i}
+                  onChange={(v, s) => this.onChange(this.locationTypes.length - 3 + i, v, s)}
+                  parentLocation={this._filterValue(`${this.props.anchor}_${this.locationTypes.length - 4 + i}`)}
+                  locationLevel={this.locationTypes.length - 3 + i}
                 />
               </Grid>
             }

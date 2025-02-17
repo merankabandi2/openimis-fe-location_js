@@ -22,7 +22,7 @@ const styles = (theme) => ({
   paperDivider: theme.paper.divider,
 });
 
-class DetailedLocation extends Component {
+class CommuneLocation extends Component {
   state = {};
 
   constructor(props) {
@@ -108,7 +108,7 @@ class DetailedLocation extends Component {
         {_.times(this.locationTypes.length - 1, (i) => (
           <ControlledField
             module="location"
-            id={`DetailedLocation.location_${this.locationTypes.length - 3 + i}`}
+            id={`CommuneLocation.location_${this.locationTypes.length - 3 + i}`}
             key={`location_${this.locationTypes.length - 3 + i}`}
             field={
               <Grid item xs={Math.floor(grid / (this.locationTypes.length - 2))} className={classes.item}>
@@ -140,5 +140,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default withModulesManager(
-  connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(DetailedLocation))),
+  connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(CommuneLocation))),
 );
