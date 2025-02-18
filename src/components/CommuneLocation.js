@@ -43,7 +43,7 @@ class CommuneLocation extends Component {
     };
     let v = !!value ? { ...value } : null;
     _.times(this.locationTypes.length - 2, (i) => {
-      state[`location_${this.locationTypes.length - 2 - i}`] = v;
+      state[`location_${this.locationTypes.length - 3 - i}`] = v;
       v = !!v ? v.parent : null;
     });
     this.setState({ ...state });
@@ -59,20 +59,6 @@ class CommuneLocation extends Component {
     }
   }
 
-  onDistrictChange = (d) => {
-    let state = { ...this.state };
-    if (!state[`location_-2`] && !!d) {
-      state[`location_-2`] = d.parent;
-    }
-    state[`location_-1`] = d;
-    for (let i = 0; i < this.locationTypes.length - 2; i++) {
-      state[`location_${i}`] = null;
-    }
-    this.setState({ ...state }, (e) => {
-      this.props.selectLocation(d, 1, this.locationTypes.length);
-    });
-  };
-
   onLocationChange = (l, v) => {
     let state = { ...this.state };
     let current = v;
@@ -85,7 +71,7 @@ class CommuneLocation extends Component {
       state[`location_${i}`] = null;
     }
     this.setState({ ...state }, (e) => {
-      if (l === this.locationTypes.length - 2) {
+      if (l === this.locationTypes.length - 3) {
         this.props.onChange(v);
       }
       this.props.selectLocation(v, l, this.locationTypes.length);
@@ -113,14 +99,14 @@ class CommuneLocation extends Component {
               <Grid item xs={Math.floor(grid / (this.locationTypes.length - 2))} className={classes.item}>
                 <PublishedComponent
                   pubRef="location.LocationPicker"
-                  value={this.state[`location_${i}`]}
-                  parentLocation={this.state[`location_${i - 1}`]}
+                  value={this.state[`location_${i - 1}`]}
+                  parentLocation={this.state[`location_${i - 2}`]}
                   readOnly={readOnly}
                   required={required}
                   withNull={true}
                   filterLabels={filterLabels}
                   locationLevel={this.locationTypes.length - 3 + i}
-                  onChange={(v) => this.onLocationChange(i, v)}
+                  onChange={(v) => this.onLocationChange(i - 1, v)}
                   title={title}
                 />
               </Grid>
