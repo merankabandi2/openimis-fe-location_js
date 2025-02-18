@@ -8,7 +8,6 @@ import { Grid } from "@material-ui/core";
 import { withModulesManager, ControlledField, PublishedComponent } from "@openimis/fe-core";
 import { selectLocation } from "../actions";
 import { DEFAULT_LOCATION_TYPES } from "../constants";
-import CoarseLocation from "./CoarseLocation";
 
 const styles = (theme) => ({
   dialogTitle: theme.dialog.title,
@@ -44,7 +43,7 @@ class CommuneLocation extends Component {
     };
     let v = !!value ? { ...value } : null;
     _.times(this.locationTypes.length - 2, (i) => {
-      state[`location_${this.locationTypes.length - 3 - i}`] = v;
+      state[`location_${this.locationTypes.length - 2 - i}`] = v;
       v = !!v ? v.parent : null;
     });
     this.setState({ ...state });
@@ -86,7 +85,7 @@ class CommuneLocation extends Component {
       state[`location_${i}`] = null;
     }
     this.setState({ ...state }, (e) => {
-      if (l === this.locationTypes.length - 3) {
+      if (l === this.locationTypes.length - 2) {
         this.props.onChange(v);
       }
       this.props.selectLocation(v, l, this.locationTypes.length);
