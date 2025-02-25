@@ -85,13 +85,13 @@ class LocationFilter extends Component {
     let grid = split ? 12 : 6;
     return (
       <Grid container className={classes.form}>
-        {_.times(this.locationTypes.length - 1, (i) => (
+        {_.times(this.locationTypes.length, (i) => ( 
           <ControlledField
             module="location"
             id={`LocationFilter.location_${this.locationTypes.length - 3 + i}`}
             key={`location_${this.locationTypes.length - 3 + i}`}
             field={
-              <Grid item xs={Math.floor(grid / (this.locationTypes.length - 2))} className={classes.item}>
+              <Grid item xs={Math.floor(grid / (this.locationTypes.length - 1))} className={classes.item}>
                 <PublishedComponent
                   pubRef="location.LocationPicker"
                   value={this._filterValue(`${this.props.anchor}_${this.locationTypes.length - 3 + i}`)}
