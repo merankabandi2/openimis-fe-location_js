@@ -8,7 +8,7 @@ import { TextField, Chip } from "@material-ui/core";
 import { withTheme, withStyles } from "@material-ui/core/styles";
 import { useModulesManager, useTranslations } from "@openimis/fe-core";
 import { fetchLocationsStr, fetchLocationsByUuids } from "../actions";
-import { locationLabel } from "../utils";
+import { getLocationMaxLevels, locationLabel } from "../utils";
 import _ from "lodash";
 
 const styles = () => ({
@@ -61,9 +61,7 @@ const LocationCascader = ({
   const { formatMessage } = useTranslations("location", modulesManager);
   const dispatch = useDispatch();
   const locState = useSelector((state) => state.loc);
-  const maxLevel = parseInt(
-    modulesManager.getConf("location", "Location.MaxLevels", 4)
-  );
+  const maxLevel = getLocationMaxLevels(modulesManager);
 
   const [options, setOptions] = useState([]);
   const [locations, setLocations] = useState(multiple ? [] : "");

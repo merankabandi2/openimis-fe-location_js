@@ -26,8 +26,20 @@ import LocationTypePicker from "./pickers/LocationTypePicker";
 import messages_en from "./translations/en.json";
 import reducer from "./reducer";
 
-import { LOCATION_SUMMARY_PROJECTION, nestParentsProjections } from "./utils";
+import {
+  DEFAULT_LOCATION_MAX_LEVELS,
+  LOCATION_MAX_LEVELS_KEY,
+  locationFlatProjection,
+  parseLocationMaxLevels,
+} from "./utils";
 import { HEALTH_FACILITY_PICKER_PROJECTION, HEALTH_FACILITY_REFER_PICKER_PROJECTION } from "./actions";
+
+export {
+  DEFAULT_LOCATION_MAX_LEVELS,
+  LOCATION_MAX_LEVELS_KEY,
+  getLocationMaxLevels,
+  parseLocationMaxLevels,
+} from "./utils";
 
 const ROUTE_LOCATIONS = "location/locations";
 const ROUTE_HEALTH_FACILITIES = "location/healthFacilities";
@@ -61,7 +73,7 @@ const DEFAULT_CONFIG = {
     { key: "location.HealthFacilityPriceListsPanel", ref: HealthFacilityPriceListsPanel },
     { key: "location.LocationTypePicker", ref: LocationTypePicker },
     { key: "location.LocationGQLType", ref: "LocationGQLType" },
-    { key: "location.Location.MaxLevels", ref: "4" },
+    { key: LOCATION_MAX_LEVELS_KEY, ref: String(DEFAULT_LOCATION_MAX_LEVELS) },
     { key: "location.LocationsPage", ref: LocationsPage },
     { key: "location.HealthFacilitiesPage", ref: HealthFacilitiesPage },
     { key: "location.CoarseLocationFilter", ref: CoarseLocationFilter },
@@ -89,12 +101,22 @@ const DEFAULT_CONFIG = {
   ],
 };
 
+const FLAT_PROJECTION_KEY = "location.Location.FlatProjection";
+
+// The level count comes from the module configuration key `location.Location.MaxLevels`,
+// else from that ref in `refs`, else 4. The ref is rewritten to the resolved value so that
+// getRef and getConf agree, and the flat projection fetches that many levels.
 export const LocationModule = (cfg) => {
-  let config = { ...DEFAULT_CONFIG, ...cfg };
-  var levels = config.refs.filter((c) => c.key === "location.Location.MaxLevels")[0].ref;
-  config.refs.push({
-    key: "location.Location.FlatProjection",
-    ref: [...LOCATION_SUMMARY_PROJECTION, nestParentsProjections(levels - 2)],
-  });
+  const config = { ...DEFAULT_CONFIG, ...cfg };
+  const levelsRef = config.refs.find((r) => r.key === LOCATION_MAX_LEVELS_KEY);
+  const levels =
+    parseLocationMaxLevels(config[LOCATION_MAX_LEVELS_KEY]) ??
+    parseLocationMaxLevels(levelsRef?.ref) ??
+    DEFAULT_LOCATION_MAX_LEVELS;
+  config.refs = [
+    ...config.refs.filter((r) => r.key !== LOCATION_MAX_LEVELS_KEY && r.key !== FLAT_PROJECTION_KEY),
+    { key: LOCATION_MAX_LEVELS_KEY, ref: String(levels) },
+    { key: FLAT_PROJECTION_KEY, ref: locationFlatProjection(levels) },
+  ];
   return config;
 };
