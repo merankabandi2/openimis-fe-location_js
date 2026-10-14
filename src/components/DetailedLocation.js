@@ -64,9 +64,23 @@ class DetailedLocation extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!_.isEqual(prevProps.value, this.props.value)) {
-      this.computeState();
+      // The value this component has just emitted is already shown by its pickers.
+      const emitted = _.isEqual(this.props.value, this.emittedValue);
+      this.emittedValue = undefined;
+      if (!emitted) this.computeState();
     }
   }
+
+  // An upper level changed, so the lower pickers are empty: the location of
+  // the form, if any, no longer matches them.
+  clearValue = () => {
+    if (this.props.value) this.emitChange(null);
+  };
+
+  emitChange = (value) => {
+    this.emittedValue = value;
+    this.props.onChange(value);
+  };
 
   onDistrictChange = (d) => {
     let state = { ...this.state };
@@ -78,6 +92,7 @@ class DetailedLocation extends Component {
       state[`location_${i}`] = null;
     }
     this.setState({ ...state }, (e) => {
+      this.clearValue();
       this.props.selectLocation(d, 1, this.locationTypes.length);
     });
   };
@@ -95,7 +110,9 @@ class DetailedLocation extends Component {
     }
     this.setState({ ...state }, (e) => {
       if (l === this.locationTypes.length - 3) {
-        this.props.onChange(v);
+        this.emitChange(v);
+      } else {
+        this.clearValue();
       }
       this.props.selectLocation(v, l, this.locationTypes.length);
     });
@@ -109,7 +126,9 @@ class DetailedLocation extends Component {
     levels[level] = v;
     this.setState({ levels }, () => {
       if (level === count - 1) {
-        this.props.onChange(v);
+        this.emitChange(v);
+      } else {
+        this.clearValue();
       }
       this.props.selectLocation(v, level, count);
     });
