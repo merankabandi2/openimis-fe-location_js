@@ -123,7 +123,8 @@ const LocationPicker = (props) => {
       onChange={handleChange}
       filterOptions={filterOptions}
       filterSelectedOptions={filterSelectedOptions}
-      onInputChange={(__, searchString) => onInputChange(searchString)}
+      // Only typed text is a search string; a reset fills the input with the label of the value.
+      onInputChange={(__, searchString, reason) => onInputChange(reason === "input" ? searchString : "")}
       renderInput={(inputProps) => (
         <TextField
           {...inputProps}
